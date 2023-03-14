@@ -1,0 +1,51 @@
+﻿@model AppLeitorNfe.Models.Nfe
+
+@{
+    ViewBag.Title = "Excluir";
+}
+
+<h2>Excluir</h2>
+
+<h3>Deseja remover o NFe?</h3>
+<div>
+    <h4>Nfe</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        
+
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.nNF)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nNF)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.chNFe)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.chNFe)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dhEmi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dhEmi)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Excluir" class="btn btn-danger" /> 
+            @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
+        </div>
+    }
+</div>

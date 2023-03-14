@@ -1,0 +1,122 @@
+﻿CreateTable(
+                "dbo.Destinatarios",
+                c => new
+                    {
+                        id = c.Int(nullable: false, identity: true),
+                        xNome = c.String(),
+                        CNPJ = c.String(),
+                        DestEndId = c.Int(),
+                    })
+                .PrimaryKey(t => t.id)
+                .ForeignKey("dbo.DestinatarioEnderecocs", t => t.DestEndId)
+                .Index(t => t.DestEndId);
+            
+            CreateTable(
+                "dbo.DestinatarioEnderecocs",
+                c => new
+                    {
+                        id = c.Int(nullable: false, identity: true),
+                        xLgr = c.String(),
+                        nro = c.String(),
+                        xBairro = c.String(),
+                        xMun = c.String(),
+                        UF = c.String(),
+                        CEP = c.String(),
+                    })
+                .PrimaryKey(t => t.id);
+            
+            CreateTable(
+                "dbo.Emitentes",
+                c => new
+                    {
+                        id = c.Int(nullable: false, identity: true),
+                        xNome = c.Int(nullable: false),
+                        CNPJ = c.Int(nullable: false),
+                        EmitEndId = c.Int(),
+                    })
+                .PrimaryKey(t => t.id)
+                .ForeignKey("dbo.EmitenteEnderecoes", t => t.EmitEndId)
+                .Index(t => t.EmitEndId);
+            
+            CreateTable(
+                "dbo.EmitenteEnderecoes",
+                c => new
+                    {
+                        id = c.Int(nullable: false, identity: true),
+                        xLgr = c.String(),
+                        nro = c.String(),
+                        xBairro = c.String(),
+                        xMun = c.String(),
+                        UF = c.String(),
+                        CEP = c.String(),
+                    })
+                .PrimaryKey(t => t.id);
+            
+            CreateTable(
+                "dbo.Icms",
+                c => new
+                    {
+                        id = c.Int(nullable: false, identity: true),
+                        vNF = c.String(),
+                    })
+                .PrimaryKey(t => t.id);
+            
+            CreateTable(
+                "dbo.Nfes",
+                c => new
+                    {
+                        id = c.Int(nullable: false, identity: true),
+                        nNF = c.Int(nullable: false),
+                        chNFe = c.Int(nullable: false),
+                        dhEmi = c.String(),
+                        EmitenteId = c.Int(),
+                        DestinatarioId = c.Int(),
+                        IcmsId = c.Int(),
+                    })
+                .PrimaryKey(t => t.id)
+                .ForeignKey("dbo.Destinatarios", t => t.DestinatarioId)
+                .ForeignKey("dbo.Emitentes", t => t.EmitenteId)
+                .ForeignKey("dbo.Icms", t => t.IcmsId)
+                .Index(t => t.EmitenteId)
+                .Index(t => t.DestinatarioId)
+                .Index(t => t.IcmsId);
+            
+            CreateTable(
+                "dbo.Produtoes",
+                c => new
+                    {
+                        id = c.Int(nullable: false, identity: true),
+                        cProd = c.String(),
+                        qCom = c.String(),
+                        vUnCom = c.String(),
+                        vProd = c.String(),
+                        NfeId = c.Int(),
+                    })
+                .PrimaryKey(t => t.id)
+                .ForeignKey("dbo.Nfes", t => t.NfeId)
+                .Index(t => t.NfeId);
+            
+        }
+
+		public override void Down()
+        {
+            DropForeignKey("dbo.Produtoes", "NfeId", "dbo.Nfes");
+            DropForeignKey("dbo.Nfes", "IcmsId", "dbo.Icms");
+            DropForeignKey("dbo.Nfes", "EmitenteId", "dbo.Emitentes");
+            DropForeignKey("dbo.Nfes", "DestinatarioId", "dbo.Destinatarios");
+            DropForeignKey("dbo.Emitentes", "EmitEndId", "dbo.EmitenteEnderecoes");
+            DropForeignKey("dbo.Destinatarios", "DestEndId", "dbo.DestinatarioEnderecocs");
+            DropIndex("dbo.Produtoes", new[] { "NfeId" });
+            DropIndex("dbo.Nfes", new[] { "IcmsId" });
+            DropIndex("dbo.Nfes", new[] { "DestinatarioId" });
+            DropIndex("dbo.Nfes", new[] { "EmitenteId" });
+            DropIndex("dbo.Emitentes", new[] { "EmitEndId" });
+            DropIndex("dbo.Destinatarios", new[] { "DestEndId" });
+            DropTable("dbo.Produtoes");
+            DropTable("dbo.Nfes");
+            DropTable("dbo.Icms");
+            DropTable("dbo.EmitenteEnderecoes");
+            DropTable("dbo.Emitentes");
+            DropTable("dbo.DestinatarioEnderecocs");
+            DropTable("dbo.Destinatarios");
+        }
