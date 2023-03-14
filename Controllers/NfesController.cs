@@ -39,9 +39,7 @@ namespace AppLeitorNfe.Controllers
         
         public ActionResult Create()
         {
-            ViewBag.DestinatarioId = new SelectList(db.Destinatarios, "id", "xNome");
-            ViewBag.EmitenteId = new SelectList(db.Emitentes, "id", "id");
-            ViewBag.IcmsId = new SelectList(db.Icms, "id", "vNF");
+            
             return View();
         }
 
@@ -57,9 +55,7 @@ namespace AppLeitorNfe.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.DestinatarioId = new SelectList(db.Destinatarios, "id", "xNome", nfe.DestinatarioId);
-            ViewBag.EmitenteId = new SelectList(db.Emitentes, "id", "id", nfe.EmitenteId);
-            ViewBag.IcmsId = new SelectList(db.Icms, "id", "vNF", nfe.IcmsId);
+            
             return View(nfe);
         }
 
@@ -75,9 +71,7 @@ namespace AppLeitorNfe.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.DestinatarioId = new SelectList(db.Destinatarios, "id", "xNome", nfe.DestinatarioId);
-            ViewBag.EmitenteId = new SelectList(db.Emitentes, "id", "id", nfe.EmitenteId);
-            ViewBag.IcmsId = new SelectList(db.Icms, "id", "vNF", nfe.IcmsId);
+            
             return View(nfe);
         }
 
@@ -92,9 +86,7 @@ namespace AppLeitorNfe.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.DestinatarioId = new SelectList(db.Destinatarios, "id", "xNome", nfe.DestinatarioId);
-            ViewBag.EmitenteId = new SelectList(db.Emitentes, "id", "id", nfe.EmitenteId);
-            ViewBag.IcmsId = new SelectList(db.Icms, "id", "vNF", nfe.IcmsId);
+            
             return View(nfe);
         }
 
